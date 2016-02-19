@@ -5,7 +5,6 @@ import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
-import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -44,8 +43,6 @@ public class MainActivity extends ActionBarActivity implements OnClickListener,
 
     private Button stop;
 
-    private Button showLocation;
-
     private MainActivityPresenter presenter;
 
     private GoogleApiClient googleApiClient;
@@ -66,9 +63,6 @@ public class MainActivity extends ActionBarActivity implements OnClickListener,
         setContentView( R.layout.activity_main );
         record = ( Button ) findViewById( R.id.btn_record );
         stop = ( Button ) findViewById( R.id.btn_stop_recording );
-        showLocation = ( Button ) findViewById( R.id.btn_show_location );
-        showLocation.setOnClickListener( this );
-
         record.setOnClickListener( this );
         stop.setOnClickListener( this );
         presenter = new MainActivityPresenterImpl( this );
@@ -115,19 +109,6 @@ public class MainActivity extends ActionBarActivity implements OnClickListener,
             case R.id.btn_stop_recording:
                 presenter.stopRecordScheduler();
                 break;
-            case R.id.btn_show_location:
-                try {
-
-                    Location loc = LocationServices.FusedLocationApi
-                            .getLastLocation( googleApiClient );
-                    Toast.makeText( this,
-                                    String.format( "Longitude: %s Latitude: %s", loc.getLongitude(),
-                                                   loc.getLatitude() ), Toast.LENGTH_SHORT ).show();
-                } catch ( Exception ex ) {
-                    Toast.makeText( this, "Woops no location yet", Toast.LENGTH_SHORT ).show();
-                }
-
-
         }
     }
 
