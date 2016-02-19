@@ -3,6 +3,7 @@ package com.blackbox.cvrt.core.thread;
 import android.location.Location;
 import android.media.MediaRecorder;
 
+import com.blackbox.cvrt.context.ApplicationContext;
 import com.blackbox.cvrt.core.model.MP3Record;
 import com.blackbox.cvrt.core.model.impl.AudioRecorderModel;
 import com.blackbox.cvrt.core.service.location.LocationRetriever;
@@ -26,14 +27,12 @@ public class PeriodicServiceRunnable implements Runnable, MediaRecorder.OnInfoLi
     private final File recordDirectory;
     private final int sampleRate;
     private AudioRecorderModel mediaRecorder;
-    private final int duration;
     private final LocationRetriever locationRetriever;
 
-    public PeriodicServiceRunnable( File recordDirector, int sampleRate, int duration,
+    public PeriodicServiceRunnable( File recordDirector, int sampleRate,
                                     LocationRetriever locationRetriever ) {
         this.recordDirectory = recordDirector;
         this.sampleRate = sampleRate;
-        this.duration = duration;
         this.locationRetriever = locationRetriever;
     }
 
@@ -47,15 +46,16 @@ public class PeriodicServiceRunnable implements Runnable, MediaRecorder.OnInfoLi
                 if( mediaRecorder != null ) {
                     processAudio();
                 }
-                mediaRecorder = getMediaRecorder();
+                int duration = ApplicationContext.getRecordingInterval();
+                mediaRecorder = getMediaRecorder( duration );
                 mediaRecorder.start();
                 isRecording = true;
                 int sleepDuration = duration;
-                if( duration > 3000 ) {
+                if( sleepDuration > 3000 ) {
                     sleepDuration -= 2000;
-                } else if( duration > 2000 ) {
+                } else if( sleepDuration > 2000 ) {
                     sleepDuration -= 1000;
-                } else if( duration > 1000 ) {
+                } else if( sleepDuration > 1000 ) {
                     sleepDuration -= 300;
                 } else {
                     sleepDuration = 0;
@@ -85,7 +85,7 @@ public class PeriodicServiceRunnable implements Runnable, MediaRecorder.OnInfoLi
         new Thread( new UploaderRunnable( record, location ) ).start();
     }
 
-    private AudioRecorderModel getMediaRecorder() {
+    private AudioRecorderModel getMediaRecorder( int duration ) {
         return new AudioRecorderModel( recordDirectory, duration, sampleRate, this );
     }
 

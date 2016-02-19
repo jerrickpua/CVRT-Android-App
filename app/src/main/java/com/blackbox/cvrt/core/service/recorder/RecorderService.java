@@ -13,9 +13,9 @@ public interface RecorderService {
     public static final int DEFAULT_SAMPLE_RATE = AudioTrack
             .getNativeOutputSampleRate( AudioManager.STREAM_SYSTEM );
 
-    public static final int DEFAULT_INTERVAL = 300000;
+    public static final int DEFAULT_INTERVAL = 1;
 
-    public void startRecord( int interval );
+    public void startRecord();
 
     public void stopRecord();
 

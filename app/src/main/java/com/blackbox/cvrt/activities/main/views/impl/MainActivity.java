@@ -18,7 +18,7 @@ import android.widget.Toast;
 import com.blackbox.cvrt.R;
 import com.blackbox.cvrt.activities.main.presenter.MainActivityPresenter;
 import com.blackbox.cvrt.activities.main.presenter.impl.MainActivityPresenterImpl;
-import com.blackbox.cvrt.activities.settings.views.impl.SettingsFragment;
+import com.blackbox.cvrt.activities.settings.views.impl.SettingsActivity;
 import com.blackbox.cvrt.core.exception.RecorderStateException;
 import com.blackbox.cvrt.core.service.location.impl.LocationServiceImpl;
 import com.blackbox.cvrt.utils.Logger;
@@ -98,6 +98,9 @@ public class MainActivity extends ActionBarActivity implements OnClickListener,
 
         //noinspection SimplifiableIfStatement
         if( id == R.id.action_settings ) {
+            Intent intent = new Intent( this, SettingsActivity.class );
+            startActivity( intent );
+            return true;
         }
 
         return super.onOptionsItemSelected( item );

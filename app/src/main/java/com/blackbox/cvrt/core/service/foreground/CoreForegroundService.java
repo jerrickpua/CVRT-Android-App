@@ -31,7 +31,6 @@ public class CoreForegroundService extends Service implements GoogleLocation {
 
     private static final Logger logger = new Logger( CoreForegroundService.class );
     private RecorderRunnable runnable;
-    private int interval = RecorderService.DEFAULT_INTERVAL;
     private RecorderService recorderService;
     private LocationService locationService;
     private Thread recorderThread = null;
@@ -63,11 +62,6 @@ public class CoreForegroundService extends Service implements GoogleLocation {
     }
 
     private void initRecorderThread( Intent intent ) {
-        int intentInterval = intent.getIntExtra( "interval", -1 );
-        if( intentInterval <= 1000 ) {
-            intentInterval = interval;
-        }
-        runnable.setInterval( intentInterval );
         recorderThread = new Thread( runnable );
         recorderThread.setPriority( Thread.MAX_PRIORITY );
     }
@@ -104,7 +98,7 @@ public class CoreForegroundService extends Service implements GoogleLocation {
                         RecorderService.DEFAULT_RECORDINGS_FOLDER ),
                 locationService );
 
-        runnable = new RecorderRunnable( getApplicationContext(), recorderService );
+        runnable = new RecorderRunnable( recorderService );
 
     }
 

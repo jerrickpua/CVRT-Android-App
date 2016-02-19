@@ -4,6 +4,7 @@ import android.content.Context;
 import android.location.Location;
 
 import com.blackbox.cvrt.activities.main.views.GoogleLocation;
+import com.blackbox.cvrt.context.ApplicationContext;
 import com.blackbox.cvrt.core.service.location.LocationService;
 import com.blackbox.cvrt.utils.Logger;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -22,14 +23,13 @@ public class LocationServiceImpl implements LocationService, LocationListener {
 
     static {
         LOCATION_REQUEST = new LocationRequest();
-        LOCATION_REQUEST.setInterval( 5000 );
-        LOCATION_REQUEST.setFastestInterval( 2500 );
+        LOCATION_REQUEST.setInterval( ApplicationContext.getLocationServiceUpdateInterval() );
+        LOCATION_REQUEST
+                .setFastestInterval( ApplicationContext.getLocationServiceFastestUpdateInterval() );
         LOCATION_REQUEST.setPriority( LocationRequest.PRIORITY_HIGH_ACCURACY );
     }
 
     private static final Logger logger = new Logger( LocationServiceImpl.class );
-
-    private final Context context;
 
     private final GoogleLocation googleLocation;
 
@@ -40,7 +40,6 @@ public class LocationServiceImpl implements LocationService, LocationListener {
             throw new IllegalArgumentException(
                     "Context must implement " + GoogleLocation.class.getCanonicalName() );
         }
-        this.context = context;
         this.googleLocation = ( GoogleLocation ) context;
         googleApiClient = new GoogleApiClient.Builder( context )
                 .addOnConnectionFailedListener( googleLocation )

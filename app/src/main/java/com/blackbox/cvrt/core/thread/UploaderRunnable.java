@@ -2,11 +2,13 @@ package com.blackbox.cvrt.core.thread;
 
 import android.location.Location;
 
+import com.blackbox.cvrt.context.ApplicationContext;
 import com.blackbox.cvrt.core.model.MP3Record;
 import com.blackbox.cvrt.utils.DateUtils;
 import com.blackbox.cvrt.utils.Logger;
 import com.blackbox.cvrt.utils.RestUtils;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -36,7 +38,13 @@ public class UploaderRunnable implements Runnable {
 
     @Override
     public void run() {
-        final String host = "http://192.168.0.102:8080";
+        final String host = ApplicationContext.getServerUrl();
+        if( StringUtils.isEmpty( host ) ) {
+            logger.w(
+                    "Server url not configured. Configure to enable android device send data to server" );
+            return;
+        }
+
         RestTemplate rest = RestUtils.getRestTemplate();
         MultiValueMap<String, Object> parts = new LinkedMultiValueMap<>();
         parts.add( "file", new FileSystemResource( record.getOutputFile() ) );

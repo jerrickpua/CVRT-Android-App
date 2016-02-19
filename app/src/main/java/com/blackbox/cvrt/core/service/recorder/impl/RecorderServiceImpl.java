@@ -41,8 +41,8 @@ public class RecorderServiceImpl implements RecorderService {
     private Thread thread;
 
     @Override
-    public void startRecord( int interval ) {
-        thread = new Thread( new PeriodicServiceRunnable( recordDirectory, sampleRate, interval,
+    public void startRecord( ) {
+        thread = new Thread( new PeriodicServiceRunnable( recordDirectory, sampleRate,
                                                           locationRetriever ) );
         thread.start();
     }
