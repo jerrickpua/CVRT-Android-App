@@ -3,7 +3,6 @@ package com.blackbox.cvrt.core.thread;
 import android.location.Location;
 import android.media.MediaRecorder;
 
-import com.blackbox.cvrt.core.exception.LocationServiceUnavailableException;
 import com.blackbox.cvrt.core.model.MP3Record;
 import com.blackbox.cvrt.core.model.impl.AudioRecorderModel;
 import com.blackbox.cvrt.core.service.location.LocationRetriever;

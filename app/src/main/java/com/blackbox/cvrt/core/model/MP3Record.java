@@ -1,9 +1,10 @@
 package com.blackbox.cvrt.core.model;
 
+import com.blackbox.cvrt.utils.DateUtils;
+
 import org.joda.time.DateTime;
 
 import java.io.File;
-import java.util.Date;
 
 /**
  * @author Jerrick Pua
@@ -20,11 +21,10 @@ public class MP3Record {
         this.startDate = startDate;
         this.endDate = endDate;
         this.outputFile = new File( baseDirectory,
-                                    String.format( "%s-%s.mp3",
-                                                   Record.RECORDER_TIMESTAMP_FORMAT.print(
-                                                           startDate ),
-                                                   Record.RECORDER_TIMESTAMP_FORMAT
-                                                           .print( endDate ) ) );
+                                    String.format( "%s-%s.mp3", startDate
+                                            .toString( DateUtils.DEFAULT_TIME_STAMP_FORMAT ),
+                                                   endDate.toString(
+                                                           DateUtils.DEFAULT_TIME_STAMP_FORMAT ) ) );
     }
 
     public File getOutputFile() {

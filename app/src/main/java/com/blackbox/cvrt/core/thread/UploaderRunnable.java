@@ -3,12 +3,10 @@ package com.blackbox.cvrt.core.thread;
 import android.location.Location;
 
 import com.blackbox.cvrt.core.model.MP3Record;
-import com.blackbox.cvrt.core.model.Record;
+import com.blackbox.cvrt.utils.DateUtils;
 import com.blackbox.cvrt.utils.Logger;
 import com.blackbox.cvrt.utils.RestUtils;
 
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -43,12 +41,12 @@ public class UploaderRunnable implements Runnable {
         MultiValueMap<String, Object> parts = new LinkedMultiValueMap<>();
         parts.add( "file", new FileSystemResource( record.getOutputFile() ) );
         parts.add( "startDate",
-                   Record.RECORDER_TIMESTAMP_FORMAT.print( record.getStartDate() ) );
-        parts.add( "endDate", Record.RECORDER_TIMESTAMP_FORMAT.print(
-                record.getEndDate() ) );
+                   record.getStartDate().toString( DateUtils.DEFAULT_TIME_STAMP_FORMAT ) );
+        parts.add( "endDate",
+                   record.getEndDate().toString( DateUtils.DEFAULT_TIME_STAMP_FORMAT ) );
         if( location != null ) {
-            parts.add( "longitude", String.valueOf( location.getLongitude() )  );
-            parts.add( "latitude", String.valueOf(  location.getLatitude() ) );
+            parts.add( "longitude", String.valueOf( location.getLongitude() ) );
+            parts.add( "latitude", String.valueOf( location.getLatitude() ) );
         }
         logger.i( parts.toString() );
         HttpHeaders headers = new HttpHeaders();

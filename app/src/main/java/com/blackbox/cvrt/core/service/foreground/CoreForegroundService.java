@@ -99,10 +99,10 @@ public class CoreForegroundService extends Service implements GoogleLocation {
     @Override
     public void onCreate() {
         locationService = new LocationServiceImpl( this );
-        recorderService = new RecorderServiceImpl( getCacheDir(),
-                                                   getRecordingsBaseDirectory(
-                                                           RecorderService.DEFAULT_RECORDINGS_FOLDER ),
-                                                   locationService );
+        recorderService = new RecorderServiceImpl(
+                getRecordingsBaseDirectory(
+                        RecorderService.DEFAULT_RECORDINGS_FOLDER ),
+                locationService );
 
         runnable = new RecorderRunnable( getApplicationContext(), recorderService );
 
