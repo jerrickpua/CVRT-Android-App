@@ -4,6 +4,7 @@ import android.location.Location;
 
 import com.blackbox.cvrt.context.ApplicationContext;
 import com.blackbox.cvrt.core.model.MP3Record;
+import com.blackbox.cvrt.core.rest.model.APIResponse;
 import com.blackbox.cvrt.utils.DateUtils;
 import com.blackbox.cvrt.utils.Logger;
 import com.blackbox.cvrt.utils.RestUtils;
@@ -62,10 +63,10 @@ public class UploaderRunnable implements Runnable {
         try {
             HttpEntity<MultiValueMap<String, Object>> objectEntity = new HttpEntity<>(
                     parts, headers );
-            ResponseEntity<String> response = rest
+            ResponseEntity<APIResponse> response = rest
                     .exchange( host + RECORD_UPLOAD_API_ENDPOINT, HttpMethod.POST, objectEntity,
-                               String.class );
-            logger.i( String.format( "Received object from url: ", response ) );
+                               APIResponse.class );
+            logger.i( String.format( "Response from server: %s", response.getBody().toString() ) );
         } catch ( Throwable ex ) {
             logger.i( "Encountered an error while attempting send data to server", ex );
         }
