@@ -60,9 +60,9 @@ public class PeriodicServiceRunnable implements Runnable, MediaRecorder.OnInfoLi
                 } else {
                     sleepDuration = 0;
                 }
-                logger.i( "Thread sleeping for " + sleepDuration );
+                logger.i( "Record thread sleeping for " + sleepDuration );
                 Thread.sleep( sleepDuration );
-                logger.i( "Thread awake" );
+                logger.i( "Record thread awake" );
 
             }
         } catch ( InterruptedException ex ) {
