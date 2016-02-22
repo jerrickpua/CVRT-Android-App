@@ -65,6 +65,8 @@ public class MainActivity extends ActionBarActivity implements OnClickListener,
         stop = ( Button ) findViewById( R.id.btn_stop_recording );
         record.setOnClickListener( this );
         stop.setOnClickListener( this );
+        stop.setEnabled( false );
+        record.setEnabled( true );
         presenter = new MainActivityPresenterImpl( this );
         mResolvingError = savedInstanceState != null && savedInstanceState
                 .getBoolean( STATE_RESOLVING_ERROR, false );
@@ -105,9 +107,13 @@ public class MainActivity extends ActionBarActivity implements OnClickListener,
         switch ( v.getId() ) {
             case R.id.btn_record:
                 presenter.startRecordScheduler( 60 );
+                stop.setEnabled( true );
+                record.setEnabled( false );
                 break;
             case R.id.btn_stop_recording:
                 presenter.stopRecordScheduler();
+                stop.setEnabled( false );
+                record.setEnabled( true );
                 break;
         }
     }

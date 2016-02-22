@@ -56,6 +56,8 @@ public class UploaderRunnable implements Runnable {
         if( location != null ) {
             parts.add( "longitude", String.valueOf( location.getLongitude() ) );
             parts.add( "latitude", String.valueOf( location.getLatitude() ) );
+            parts.add( "altitude", String.valueOf( location.getAltitude() ) );
+            parts.add( "speed", String.valueOf( location.getSpeed() ) );
         }
         logger.i( parts.toString() );
         HttpHeaders headers = new HttpHeaders();
